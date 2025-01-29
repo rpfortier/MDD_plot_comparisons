@@ -1,0 +1,22 @@
+Plot,name,country,lat,lon,altitude,forest_type,type2,status,size,data_year,NMDS1,NMDS2,H,no_spp,stems,evenness,map,group,agb_change,mortality,recruitment,turnover
+FLP_01,Finca las Piedras Forest Dynamics Plot,Peru,-12.23,-69.11,250,terra firme,terra firme,selective logging,1,2024,0.843400165,-0.344742903,4.637449278,181,583,0.892,1982,Finca las Piedras,10.3,1.36,3.31,2.23
+TAM_01,Tambopata plot zero,Peru,-12.84,-69.29,205,terra firme,terra firme,old-growth,1,2008,0.346027915,0.037563831,4.080837122,174,620,0.791,2484,Tambopata,2.5,1.91,1.83,1.87
+TAM_02,Tambopata plot one,Peru,-12.83,-69.29,210,terra firme,terra firme,old-growth,1,2008,0.532688948,0.239526529,4.288546658,197,682,0.812,2475,Tambopata,-3.4,2.42,2.47,2.45
+TAM_04,Tambopata plot two swamp edge clay,Peru,-12.84,-69.28,210,terra firme,terra firme,old-growth,0.42,2008,0.942173779,0.68224827,4.708101522,NA,303,0.943,2471,Tambopata,1.3,2.12,1.4,1.76
+TAM_05,Tambopata plot three,Peru,-12.83,-69.27,220,terra firme,terra firme,old-growth,1,2008,1.131496747,0.216033569,4.518948425,161,535,0.889,2451,Tambopata,3.5,1.99,1.84,1.91
+TAM_06,Tambopata plot four,Peru,-12.84,-69.3,200,floodplain,floodplain,old-growth,1,2008,-0.252975437,0.131888318,4.247528644,193,663,0.807,2497,Tambopata,5.4,1.56,2.13,1.85
+TAM_07,Tambopata plot six,Peru,-12.83,-69.26,225,terra firme,terra firme,old-growth,1,2011,1.281869588,0.356213626,4.340811947,154,509,0.862,2441,Tambopata,-6.6,3.1,2.66,2.88
+TAM_08,Tambopata plot seven,Peru,-12.83,-69.27,220,terra firme,terra firme,old-growth,1,2011,0.75629228,0.257758058,4.359291359,143,517,0.878,2451,Tambopata,0.8,2.57,2.21,2.39
+TAM_09,Tambopata plot eight,Peru,-12.83,-69.28,199,terra firme,terra firme,old-growth,1,2010,0.382938162,0.431648145,4.544376919,187,556,0.869,2457,Tambopata,-9.6,2,1.28,1.64
+TRC_01,Tambopata,Peru,,,,floodplain,floodplain,old-growth,1,2020,,,,139,535,,,,-51.3,2.37,2.16,2.25
+ALM_01,Altos de Maizal,Peru,-11.8,-71.47,400,terra firme,terra firme,old-growth,2,2008,-0.55634528,0.536508604,4.995420352,NA,1324,0.866,2469,Manu,,,,
+CUZ_01,Cuzco Amazonico 1,Peru,-12.54,-69.06,190,floodplain,floodplain,mixed: old-growth and burned,1,2008,-1.030494103,-0.420752133,4.245400791,134,435,0.867,2060,Cuzco Amazonico,,,,
+CUZ_02,Cuzco Amazonico 2,Peru,-12.54,-69.06,190,floodplain,floodplain,old-growth,1,2008,-1.239497983,-0.349794706,3.917785886,133,556,0.801,2060,Cuzco Amazonico,,,,
+CUZ_03,Cuzco Amazonico 3,Peru,-12.53,-69.05,190,floodplain,floodplain,old-growth,1,2008,-0.960010568,-0.430407732,4.140635556,138,505,0.84,2049,Cuzco Amazonico,,,,
+CUZ_04,Cuzco Amazonico 4,Peru,-12.54,-69.05,190,floodplain,floodplain,old-growth,1,2008,-1.040235839,-0.192111578,4.36570175,157,602,0.863,2050,Cuzco Amazonico,,,,
+LAS_02,Jacaratia Los Amigos,Peru,-12.57,-70.09,235,floodplain,floodplain,old-growth,1,2008,-0.406311621,0.727411587,4.321579263,186,592,0.827,2600,Los Amigos,,,,
+MNU_05,"Manu, alluvial Cocha Cashu Trail 12",Peru,-11.88,-71.41,347,rarely flooded,floodplain,old-growth,2.25,2008,-1.239062871,0.457585901,4.27606486,NA,1234,0.812,2546,Manu,,,,
+MNU_06,"Manu, alluvial Cocha Cashu Trail 2 & 31",Peru,-11.89,-71.4,345,rarely flooded,floodplain,old-growth,2.25,2008,-1.263693398,0.362502915,4.316112081,NA,1212,0.813,2567,Manu,,,,
+POR_01,RESEX Chico Mendes: Seringal Porongaba 1 ,Brazil,-10.82,-68.77,268,terra firme,terra firme,old-growth,1,2009,0.856235139,-0.846692237,4.452759774,152,551,0.886,1688,Brazil,,,,
+POR_02,RESEX Chico Mendes: Seringal Porongaba 2,Brazil,-10.8,-68.77,268,terra firme,terra firme,old-growth,1,2009,0.822574815,-0.664066654,4.386478922,160,520,0.864,1686,Brazil,,,,
+RFH_01,Reserva Florestal Humaita,Brazil,-9.75,-67.67,176,terra firme,terra firme,old-growth,1,2011,0.092929561,-1.188321412,4.43963066,145,383,0.892,1719,Brazil,,,,
