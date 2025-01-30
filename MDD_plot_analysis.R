@@ -423,21 +423,40 @@ plot_grid(z,y, ncol=2, rel_widths = c(1/3, 2/3))
 #first combine all plots together and make a matrix
 all_plots <- do.call(rbind, lapply(names(plots), function(name) {
   df <- plots[[name]]
-  df_selected <- df %>% dplyr::select(2, 3) %>% mutate(Plot = name)
+  df_selected <- df %>% dplyr::select(2, 3, 4) %>% mutate(Plot = name)
   return(df_selected)
 }))
 
 #remove TAM_03 and TRC_01_2009
 all_plots <- all_plots %>% filter(Plot != "TRC_01_2009")
 all_plots <- all_plots %>% filter(Plot != "TAM_03")
+all_plots <- all_plots %>% filter(DBH != 0)
 
 x <- flp_24%>%
   filter(F1 != "0")
-x <- x[,c("Family", "Species")] 
+x <- x[,c("Family", "Species", "DBH")] 
 x$Plot <- "FLP_01"
 
 all_plots <- rbind(x, all_plots)
 all_plots$Plot <- ifelse(all_plots$Plot == "TRC_01_2020", "TRC_01", all_plots$Plot)
+#calculate basal area
+all_plots$BA <- pi * (all_plots$DBH/2)^2
+#calculate relative density and basal area of each species in each plot
+x <- all_plots %>% 
+  group_by(Plot, Species) %>% 
+  summarise(total_BA = sum(BA),
+            Count = n(),
+            .groups = "drop") %>%
+  group_by(Plot) %>%
+  mutate(
+    rel_BA = (total_BA/sum(total_BA)) *100,
+    rel_density = (Count/sum(Count)) *100) %>%
+  ungroup() 
+
+x <- x %>% dplyr::select(Plot, Species, rel_BA, rel_density)
+all_plots <- left_join(all_plots, x, by = c("Plot", "Species"))
+
+#make matrix
 plot_mat <- acast(all_plots, Plot ~ Species) 
 
 plot_data <- read_excel("plot spp data/plot_metadata.xlsx")
@@ -629,8 +648,6 @@ pcluster <- hclust(plot_dist, "average")
 plot(pcluster,
      main = "Cluster dendrogram", xlab = "", sub="")
 
-
-
 ###make table S1 - Plot details
 #write.csv(plot_data2, file = "TableS1.csv")
 #write.csv(plots_agb, file = "plots_agb.csv")
@@ -751,6 +768,81 @@ ggplot(plot_data2, aes(x = NMDS1, y = NMDS2)) +
   theme_classic() +
   theme(legend.position = c(.2,.1),
         legend.box = "horizontal")
+
+#mantel test to see if geographic distance effects compositional similarity
+#make abiotic distance matrices
+#make a distance matrix for abiotic variables (for a mantel test later)
+geo_dist <- vegdist(plot_data2[,c(4,5)], method = "euclidian")
+precip_dist <- vegdist(plot_data2[,c(18)], method = "euclidian")
+
+#do the tests
+mantel(plot_dist, geo_dist, method = "spearman", permutations = 9999, na.rm = TRUE) #no, p=0.13
+#what about precipitation?
+mantel(plot_dist, precip_dist, method = "spearman", permutations = 9999, na.rm = TRUE) #marginally significant? p=0.07
+
+#which species are highly correlated with each habitat?
+library(indicspecies)
+
+#make plot_mat presence/absence 
+plot_mat2 <- plot_mat
+plot_mat2[plot_mat2 > 0] <- 1
+
+result <- multipatt(plot_mat, plot_data2$type2, func = "IndVal.g")
+summary(result)
+
+#now do the same with importance value indices
+#calculate IVI 
+all_plots$IVI <- (all_plots$rel_density + all_plots$rel_BA) / 2
+
+IV.comm <- xtabs(IVI ~ Plot + Species, data = all_plots)
+IV.comm <- as.data.frame.matrix(IV.comm)
+
+result2 <- multipatt(IV.comm, plot_data2$type2, func = "IndVal")
+summary(result2)
+
+#interestingly, no matter how we analyze it, Brazil nuts are not significantly associated with terra firme
+#let's analyze all terra firme plots together and calculate IVI for species in those plots.
+
+tf_plots <- plot_data2 %>%
+  filter(type2 == "terra firme")
+tf_plots <- all_plots %>%
+  filter(Plot %in% tf_plots$Plot)
+
+#calculate relative density and basal area of each species in pooled tf plot data
+tf_spp <- tf_plots %>% 
+  group_by(Species) %>% 
+  summarise(total_BA = sum(BA),
+            Count = n(),
+            .groups = "drop") %>%
+  mutate(
+    rel_BA = (total_BA/sum(total_BA)) *100,
+    rel_density = (Count/sum(Count)) *100) %>%
+  ungroup() 
+
+tf_spp$IVI <- (tf_spp$rel_density + tf_spp$rel_BA) / 2
+
+#now let's analyze all floodplain plots together and calculate IVI for those plots.
+
+fp_plots <- plot_data2 %>%
+  filter(type2 == "floodplain")
+fp_plots <- all_plots %>%
+  filter(Plot %in% fp_plots$Plot)
+
+#calculate relative density and basal area of each species in pooled fp plot data
+fp_spp <- fp_plots %>% 
+  group_by(Species) %>% 
+  summarise(total_BA = sum(BA),
+            Count = n(),
+            .groups = "drop") %>%
+  mutate(
+    rel_BA = (total_BA/sum(total_BA)) *100,
+    rel_density = (Count/sum(Count)) *100) %>%
+  ungroup() 
+
+fp_spp$IVI <- (fp_spp$rel_density + fp_spp$rel_BA) / 2
+
+#write.csv(tf_spp, "tf_spp.csv")
+#write.csv(fp_spp, "fp_spp.csv")
 
 ###end of script
 
